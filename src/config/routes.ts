@@ -1,5 +1,6 @@
 class Routes {
   start = "/start";
+  redirect = "/redirect";
   registration = "/registration";
 }
 
