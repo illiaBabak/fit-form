@@ -3,8 +3,9 @@ class Routes {
   redirect = "/redirect";
   login = "/login";
   signUp = "/sign-up";
-  main = "/main";
   confirm = "/confirm";
+  main = "/main";
+  myPlan = "/my-plan";
 }
 
 export const routes = new Routes();

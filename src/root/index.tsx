@@ -9,6 +9,7 @@ import { LoginPage } from "src/pages/LoginPage";
 import { StartPage } from "src/pages/StartPage";
 import { SUPABASE_URL } from "src/utils/constants";
 import { SignUpPage } from "src/pages/SignUpPage";
+import { MyPlanPage } from "src/pages/MyPlanPage";
 
 export const SUPABASE = createClient(
   SUPABASE_URL,
@@ -16,7 +17,7 @@ export const SUPABASE = createClient(
 );
 
 export const App = (): JSX.Element => {
-  const { start, redirect, login, signUp, main, confirm } = routes;
+  const { start, redirect, login, signUp, main, confirm, myPlan } = routes;
 
   return (
     <BrowserRouter>
@@ -27,8 +28,9 @@ export const App = (): JSX.Element => {
         <Route path={redirect} element={<RedirectPage />} />
         <Route path={login} element={<LoginPage />} />
         <Route path={signUp} element={<SignUpPage />} />
-        <Route path={main} element={<MainPage />} />
         <Route path={confirm} element={<ConfirmPage />} />
+        <Route path={main} element={<MainPage />} />
+        <Route path={myPlan} element={<MyPlanPage />} />
       </Routes>
     </BrowserRouter>
   );

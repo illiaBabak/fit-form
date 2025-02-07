@@ -7,11 +7,14 @@ export const userSlice = createApi({
   reducerPath: "supabaseApi",
   baseQuery: fakeBaseQuery(),
   endpoints: (builder) => ({
-    getCurrentUser: builder.query({
+    getCurrentUser: builder.query<User | null, void>({
       queryFn: async () => {
         const {
           data: { user },
+          error,
         } = await SUPABASE.auth.getUser();
+
+        if (error) throw { error };
 
         return { data: user };
       },
@@ -57,6 +60,16 @@ export const userSlice = createApi({
         return { data: data.user };
       },
     }),
+
+    logout: builder.mutation<void, void>({
+      queryFn: async () => {
+        const { error } = await SUPABASE.auth.signOut();
+
+        if (error) throw { error };
+
+        return { data: undefined };
+      },
+    }),
   }),
 });
 
@@ -65,4 +78,5 @@ export const {
   useLoginMutation,
   useSignInWithGoogleMutation,
   useSignUpMutation,
+  useLogoutMutation,
 } = userSlice;
