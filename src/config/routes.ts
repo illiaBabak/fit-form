@@ -1,7 +1,10 @@
 class Routes {
   start = "/start";
   redirect = "/redirect";
-  registration = "/registration";
+  login = "/login";
+  signUp = "/sign-up";
+  main = "/main";
+  confirm = "/confirm";
 }
 
 export const routes = new Routes();
