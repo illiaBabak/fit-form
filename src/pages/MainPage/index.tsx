@@ -1,10 +1,13 @@
 import { JSX, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
+import { ExerciseItem } from "src/components/Exercise";
 import { Header } from "src/components/Header";
+import { Loader } from "src/components/Loader";
 import { SkeletonLoader } from "src/components/SkeletonLoader";
 import {
   useGetBodyPartListQuery,
   useGetEquipmentListQuery,
+  useGetExercisesQuery,
   useGetMusclesQuery,
 } from "src/features/exercises/exercisesSlice";
 
@@ -23,6 +26,9 @@ export const MainPage = (): JSX.Element => {
     useGetEquipmentListQuery();
 
   const { data: muscles, isLoading: isLoadingMuscles } = useGetMusclesQuery();
+
+  const { data: exercises, isLoading: isLoadingExercises } =
+    useGetExercisesQuery();
 
   useEffect(() => {
     if (!searchQuery)
@@ -49,10 +55,10 @@ export const MainPage = (): JSX.Element => {
     }));
 
   return (
-    <div className="flex flex-col w-full h-screen bg-zinc-800">
+    <div className="flex flex-col w-full min-h-screen bg-zinc-800">
       <Header />
-      <div className="flex">
-        <menu className="bg-gray-200 flex-col flex w-full mt-4 mx-4 sm:mt-8 sm:mx-8 p-4 sm:p-6 rounded-md">
+      <div className="flex flex-col w-full items-center">
+        <menu className="bg-gray-200 flex-col flex w-[95%] mt-4 mx-4 sm:mt-8 sm:mx-8 p-4 sm:p-6 rounded-md">
           <div className="w-full relative">
             <input
               className="shadow-md ps-3 bg-white outline-black outline/55 w-full pe-[28px] sm:pe-[42px] h-[32px] sm:h-[42px] py-2 px-3 cursor-pointer rounded-md"
@@ -137,7 +143,7 @@ export const MainPage = (): JSX.Element => {
                         handleSearchChange(key, value)
                       }
                       value={value}
-                      className="bg-white shadow-md ms-1 outline-black outline/10 w-[80px] sm:w-[120px] h-[32px] rounded-md cursor-pointer"
+                      className="bg-white shadow-md ms-1 outline-black outline/10 w-[80px] sm:w-[140px] h-[32px] rounded-md cursor-pointer"
                     >
                       {data?.map((item, index) => (
                         <option
@@ -158,7 +164,18 @@ export const MainPage = (): JSX.Element => {
             </div>
           </div>
         </menu>
-        <div className="flex flex-row flex-wrap"></div>
+        <div className="flex flex-row flex-wrap w-full px-6 mt-4 justify-center sm:justify-between">
+          {isLoadingExercises ? (
+            <Loader />
+          ) : (
+            exercises?.map((exercise, index) => (
+              <ExerciseItem
+                exercise={exercise}
+                key={`${index}-${exercise.id}-exercise`}
+              />
+            ))
+          )}
+        </div>
       </div>
     </div>
   );

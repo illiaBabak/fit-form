@@ -1,6 +1,6 @@
 import { createApi, fakeBaseQuery } from "@reduxjs/toolkit/query/react";
 import { SUPABASE } from "src/root";
-import { BodyPart, Equipment, Muscle } from "src/types";
+import { BodyPart, Equipment, Exercise, Muscle } from "src/types";
 
 export const exercisesSlice = createApi({
   reducerPath: "supabaseApiExercise",
@@ -35,6 +35,16 @@ export const exercisesSlice = createApi({
         return { data };
       },
     }),
+
+    getExercises: builder.query<Exercise[], void>({
+      queryFn: async () => {
+        const { data, error } = await SUPABASE.from("exercises").select();
+
+        if (error) throw { error };
+
+        return { data };
+      },
+    }),
   }),
 });
 
@@ -42,4 +52,5 @@ export const {
   useGetBodyPartListQuery,
   useGetEquipmentListQuery,
   useGetMusclesQuery,
+  useGetExercisesQuery,
 } = exercisesSlice;

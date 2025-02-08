@@ -35,7 +35,7 @@ export const Header = (): JSX.Element => {
   }, [setIsOpenedUserMenu]);
 
   return (
-    <header className="flex flex-row justify-between items-center py-2 px-6 h-[80px] bg-orange-400">
+    <header className="flex sticky top-0 z-10 flex-row justify-between items-center py-2 px-6 min-h-[80px] bg-orange-400">
       <div className="flex flex-row items-center sm:h-[40px]">
         <h1 className="text-2xl sm:text-4xl text-white sm:h-full">Fit form</h1>
 
