@@ -36,9 +36,9 @@ export const MainPage = (): JSX.Element => {
   useEffect(() => {
     setSearchParams({
       query: searchQuery,
-      bodyPart: bodyPart || "back",
-      equipment: equipment || "assisted",
-      target: target || "abductors",
+      bodyPart: bodyPart || "all",
+      equipment: equipment || "all",
+      target: target || "all",
     });
   }, []);
 
@@ -55,7 +55,7 @@ export const MainPage = (): JSX.Element => {
         <menu className="bg-gray-200 flex-col flex w-full mt-4 mx-4 sm:mt-8 sm:mx-8 p-4 sm:p-6 rounded-md">
           <div className="w-full relative">
             <input
-              className="shadow-md bg-white outline-black outline/55 w-full pe-[28px] sm:pe-[42px] h-[32px] sm:h-[42px] py-2 px-3 cursor-pointer rounded-md"
+              className="shadow-md ps-3 bg-white outline-black outline/55 w-full pe-[28px] sm:pe-[42px] h-[32px] sm:h-[42px] py-2 px-3 cursor-pointer rounded-md"
               type="text"
               onChange={({ currentTarget: { value } }) =>
                 setSearchParams({
@@ -91,8 +91,8 @@ export const MainPage = (): JSX.Element => {
             )}
           </div>
 
-          <div className="flex flex-col sm:flex-row justify-between items-center mt-4 sm:mt-8">
-            <div className="flex flex-row">
+          <div className="flex flex-col sm:flex-row justify-between items-center sm:items-end lg:items-center lg:mt-4">
+            <div className="flex flex-row sm:flex-col lg:flex-row w-full flex-wrap sm:flex-nowrap sm:w-auto justify-center sm:justify-stretch items-center">
               {[
                 {
                   label: "Body part",
@@ -121,7 +121,7 @@ export const MainPage = (): JSX.Element => {
               ].map(({ label, value, data, isLoading, key, icon }) => (
                 <div
                   key={key}
-                  className="flex flex-row items-center mt-4 sm:mt-0 ms-3 sm:ms-5"
+                  className={`flex flex-row items-center mt-4 ms-3 sm:ms-5`}
                 >
                   <img
                     className="h-[24px] w-[24px] object-cover"
@@ -130,7 +130,7 @@ export const MainPage = (): JSX.Element => {
                   />
                   <p className="sm:ms-1">{label}:</p>
                   {isLoading ? (
-                    <SkeletonLoader className="w-[80px] sm:w-[120px] h-[32px] rounded-md ms-1" />
+                    <SkeletonLoader className="w-[80px] sm:w-[140px] h-[32px] rounded-md ms-1" />
                   ) : (
                     <select
                       onChange={({ currentTarget: { value } }) =>
@@ -153,7 +153,7 @@ export const MainPage = (): JSX.Element => {
               ))}
             </div>
 
-            <div className="flex items-center sm:mt-0 mt-4 justify-center p-2 bg-orange-400 cursor-pointer hover:scale-105 text-white rounded-md duration-300 h-[32px] sm:h-[42px] w-[100px] sm:w-[120px]">
+            <div className="flex items-center sm:mt-0 lg:mt-4 mt-4 justify-center p-2 bg-orange-400 cursor-pointer hover:scale-105 text-white rounded-md duration-300 h-[32px] sm:h-[42px] w-[100px] sm:w-[120px]">
               Search
             </div>
           </div>
