@@ -14,6 +14,8 @@ export const Header = (): JSX.Element => {
 
   const menuRef = useRef<HTMLDivElement | null>(null);
 
+  const userBtnRef = useRef<HTMLDivElement | null>(null);
+
   const { data, isLoading: isLoadingUser } = useGetCurrentUserQuery();
 
   const [logout] = useLogoutMutation();
@@ -22,7 +24,8 @@ export const Header = (): JSX.Element => {
 
   useEffect(() => {
     const handleClickOutsideMenu = ({ target }: MouseEvent) => {
-      if (target !== menuRef.current) setIsOpenedUserMenu(false);
+      if (target !== menuRef.current && target !== userBtnRef.current)
+        setIsOpenedUserMenu(false);
     };
 
     document.addEventListener("mousedown", handleClickOutsideMenu);
@@ -61,6 +64,7 @@ export const Header = (): JSX.Element => {
           <SkeletonLoader className="rounded-full w-[30px] h-[30px] sm:w-[50px] sm:h-[50px]" />
         ) : (
           <div
+            ref={userBtnRef}
             className="w-[30px] h-[30px] sm:w-[50px] sm:h-[50px] rounded-full flex items-center justify-center"
             onClick={() => setIsOpenedUserMenu((prev) => !prev)}
           >

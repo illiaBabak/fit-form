@@ -4,7 +4,7 @@ import { routes } from "src/config/routes";
 import { SUPABASE } from "src/root";
 
 export const userSlice = createApi({
-  reducerPath: "supabaseApi",
+  reducerPath: "supabaseApiUser",
   baseQuery: fakeBaseQuery(),
   endpoints: (builder) => ({
     getCurrentUser: builder.query<User | null, void>({

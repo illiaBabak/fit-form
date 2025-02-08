@@ -10,8 +10,9 @@ import { StartPage } from "src/pages/StartPage";
 import { SUPABASE_URL } from "src/utils/constants";
 import { SignUpPage } from "src/pages/SignUpPage";
 import { MyPlanPage } from "src/pages/MyPlanPage";
+import { Database } from "src/types/supabase";
 
-export const SUPABASE = createClient(
+export const SUPABASE = createClient<Database>(
   SUPABASE_URL,
   import.meta.env.ENV_SUPABASE_KEY
 );
