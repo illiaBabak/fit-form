@@ -3,7 +3,7 @@ import { motion } from "motion/react";
 import {
   useLoginMutation,
   useSignInWithGoogleMutation,
-} from "src/features/user/userSlice";
+} from "src/api/apiSlice";
 import { useNavigate } from "react-router-dom";
 import { routes } from "src/config/routes";
 import { Loader } from "src/components/Loader";

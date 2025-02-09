@@ -1,14 +1,18 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { exercisesSlice } from "src/features/exercises/exercisesSlice";
-import { userSlice } from "src/features/user/userSlice";
+import { apiSlice } from "src/api/apiSlice";
+import exercisesReducer from "src/features/exercises/exercisesSlice";
 
 export const store = configureStore({
   reducer: {
-    [userSlice.reducerPath]: userSlice.reducer,
-    [exercisesSlice.reducerPath]: exercisesSlice.reducer,
+    exercises: exercisesReducer,
+    [apiSlice.reducerPath]: apiSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware()
-      .concat(userSlice.middleware)
-      .concat(exercisesSlice.middleware),
+    getDefaultMiddleware().concat(apiSlice.middleware),
 });
+
+export type AppStore = typeof store;
+
+export type AppDispatch = typeof store.dispatch;
+
+export type RootState = ReturnType<typeof store.getState>;

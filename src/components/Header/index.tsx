@@ -1,10 +1,7 @@
 import { JSX, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { routes } from "src/config/routes";
-import {
-  useGetCurrentUserQuery,
-  useLogoutMutation,
-} from "src/features/user/userSlice";
+import { useGetCurrentUserQuery, useLogoutMutation } from "src/api/apiSlice";
 import { SkeletonLoader } from "../SkeletonLoader";
 
 export const Header = (): JSX.Element => {

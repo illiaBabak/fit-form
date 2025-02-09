@@ -2,9 +2,10 @@ import { createApi, fakeBaseQuery } from "@reduxjs/toolkit/query/react";
 import { User } from "@supabase/supabase-js";
 import { routes } from "src/config/routes";
 import { SUPABASE } from "src/root";
+import { BodyPart, Equipment, Muscle, Exercise } from "src/types";
 
-export const userSlice = createApi({
-  reducerPath: "supabaseApiUser",
+export const apiSlice = createApi({
+  reducerPath: "supabaseApi",
   baseQuery: fakeBaseQuery(),
   endpoints: (builder) => ({
     getCurrentUser: builder.query<User | null, void>({
@@ -70,6 +71,46 @@ export const userSlice = createApi({
         return { data: undefined };
       },
     }),
+
+    getBodyPartList: builder.query<BodyPart[], void>({
+      queryFn: async () => {
+        const { data, error } = await SUPABASE.from("bodyParts").select();
+
+        if (error) throw { error };
+
+        return { data };
+      },
+    }),
+
+    getEquipmentList: builder.query<Equipment[], void>({
+      queryFn: async () => {
+        const { data, error } = await SUPABASE.from("equipment").select();
+
+        if (error) throw { error };
+
+        return { data };
+      },
+    }),
+
+    getMuscles: builder.query<Muscle[], void>({
+      queryFn: async () => {
+        const { data, error } = await SUPABASE.from("target").select();
+
+        if (error) throw { error };
+
+        return { data };
+      },
+    }),
+
+    getExercises: builder.query<Exercise[], void>({
+      queryFn: async () => {
+        const { data, error } = await SUPABASE.from("exercises").select();
+
+        if (error) throw { error };
+
+        return { data };
+      },
+    }),
   }),
 });
 
@@ -79,4 +120,8 @@ export const {
   useSignInWithGoogleMutation,
   useSignUpMutation,
   useLogoutMutation,
-} = userSlice;
+  useGetBodyPartListQuery,
+  useGetEquipmentListQuery,
+  useGetMusclesQuery,
+  useGetExercisesQuery,
+} = apiSlice;

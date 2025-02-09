@@ -9,7 +9,10 @@ import {
   useGetEquipmentListQuery,
   useGetExercisesQuery,
   useGetMusclesQuery,
-} from "src/features/exercises/exercisesSlice";
+} from "src/api/apiSlice";
+import { useSelector } from "react-redux";
+import { RootState } from "src/app/store";
+import { ExerciseWindow } from "src/components/ExerciseWindow";
 
 export const MainPage = (): JSX.Element => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -18,6 +21,10 @@ export const MainPage = (): JSX.Element => {
   const bodyPart = searchParams.get("bodyPart") ?? "";
   const equipment = searchParams.get("equipment") ?? "";
   const target = searchParams.get("target") ?? "";
+
+  const exerciseToShow = useSelector(
+    (state: RootState) => state.exercises.exerciseToShow
+  );
 
   const { data: bodyPartList, isLoading: isLoadingBodyParts } =
     useGetBodyPartListQuery();
@@ -56,6 +63,7 @@ export const MainPage = (): JSX.Element => {
 
   return (
     <div className="flex flex-col w-full min-h-screen bg-zinc-800">
+      {!!exerciseToShow && <ExerciseWindow exercise={exerciseToShow} />}
       <Header />
       <div className="flex flex-col w-full items-center">
         <menu className="bg-gray-200 flex-col flex w-[95%] mt-4 mx-4 sm:mt-8 sm:mx-8 p-4 sm:p-6 rounded-md">

@@ -1,56 +1,24 @@
-import { createApi, fakeBaseQuery } from "@reduxjs/toolkit/query/react";
-import { SUPABASE } from "src/root";
-import { BodyPart, Equipment, Exercise, Muscle } from "src/types";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Exercise } from "src/types";
 
-export const exercisesSlice = createApi({
-  reducerPath: "supabaseApiExercise",
-  baseQuery: fakeBaseQuery(),
-  endpoints: (builder) => ({
-    getBodyPartList: builder.query<BodyPart[], void>({
-      queryFn: async () => {
-        const { data, error } = await SUPABASE.from("bodyParts").select();
+type InitialState = {
+  exerciseToShow: Exercise | null;
+};
 
-        if (error) throw { error };
+const initialState: InitialState = {
+  exerciseToShow: null,
+};
 
-        return { data };
-      },
-    }),
-
-    getEquipmentList: builder.query<Equipment[], void>({
-      queryFn: async () => {
-        const { data, error } = await SUPABASE.from("equipment").select();
-
-        if (error) throw { error };
-
-        return { data };
-      },
-    }),
-
-    getMuscles: builder.query<Muscle[], void>({
-      queryFn: async () => {
-        const { data, error } = await SUPABASE.from("target").select();
-
-        if (error) throw { error };
-
-        return { data };
-      },
-    }),
-
-    getExercises: builder.query<Exercise[], void>({
-      queryFn: async () => {
-        const { data, error } = await SUPABASE.from("exercises").select();
-
-        if (error) throw { error };
-
-        return { data };
-      },
-    }),
-  }),
+export const exercisesSlice = createSlice({
+  name: "exercises",
+  initialState,
+  reducers: {
+    setExerciseToShowId: (state, action: PayloadAction<Exercise | null>) => {
+      state.exerciseToShow = action.payload;
+    },
+  },
 });
 
-export const {
-  useGetBodyPartListQuery,
-  useGetEquipmentListQuery,
-  useGetMusclesQuery,
-  useGetExercisesQuery,
-} = exercisesSlice;
+export const { setExerciseToShowId } = exercisesSlice.actions;
+
+export default exercisesSlice.reducer;
