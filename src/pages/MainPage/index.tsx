@@ -13,6 +13,7 @@ import {
 import { useSelector } from "react-redux";
 import { RootState } from "src/app/store";
 import { ExerciseWindow } from "src/components/ExerciseWindow";
+import { motion } from "motion/react";
 
 export const MainPage = (): JSX.Element => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -172,7 +173,16 @@ export const MainPage = (): JSX.Element => {
             </div>
           </div>
         </menu>
-        <div className="flex flex-row flex-wrap w-full px-6 mt-4 justify-center sm:justify-between">
+        <motion.div
+          initial={{ x: -200, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{
+            duration: 2.5,
+            ease: "easeInOut",
+            delay: 0.2,
+          }}
+          className="flex flex-row flex-wrap w-full px-6 mt-4 justify-center sm:justify-between"
+        >
           {isLoadingExercises ? (
             <Loader />
           ) : (
@@ -183,7 +193,7 @@ export const MainPage = (): JSX.Element => {
               />
             ))
           )}
-        </div>
+        </motion.div>
       </div>
     </div>
   );
