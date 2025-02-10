@@ -3,6 +3,7 @@ import { User } from "@supabase/supabase-js";
 import { routes } from "src/config/routes";
 import { SUPABASE } from "src/root";
 import { BodyPart, Equipment, Muscle, Exercise } from "src/types";
+import { isExerciseArr } from "src/utils/guards";
 
 export const apiSlice = createApi({
   reducerPath: "supabaseApi",
@@ -111,6 +112,16 @@ export const apiSlice = createApi({
         return { data };
       },
     }),
+
+    updateExercises: builder.mutation<void, Exercise[]>({
+      queryFn: async (exercises) => {
+        const { error } = await SUPABASE.from("exercises").upsert(exercises);
+
+        if (error) throw { error };
+
+        return { data: undefined };
+      },
+    }),
   }),
 });
 
@@ -124,4 +135,5 @@ export const {
   useGetEquipmentListQuery,
   useGetMusclesQuery,
   useGetExercisesQuery,
+  useUpdateExercisesMutation,
 } = apiSlice;

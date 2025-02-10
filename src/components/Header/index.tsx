@@ -77,7 +77,8 @@ export const Header = (): JSX.Element => {
         >
           <p className="text-gray-500">{data?.email}</p>
           <div
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation();
               logout();
               navigate(routes.start);
             }}

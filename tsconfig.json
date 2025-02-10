@@ -13,7 +13,8 @@
     "paths": {
       "src/*": ["./src/*"]
     },
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "lib": ["es5", "es6", "dom", "dom.iterable"]
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"]

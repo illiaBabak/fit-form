@@ -14,6 +14,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "src/app/store";
 import { ExerciseWindow } from "src/components/ExerciseWindow";
 import { motion } from "motion/react";
+import { useUpdateExercisesData } from "src/hooks/useUpdateExercisesData";
 
 export const MainPage = (): JSX.Element => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -37,6 +38,8 @@ export const MainPage = (): JSX.Element => {
 
   const { data: exercises, isLoading: isLoadingExercises } =
     useGetExercisesQuery();
+
+  useUpdateExercisesData();
 
   useEffect(() => {
     if (!searchQuery)
