@@ -20,8 +20,9 @@ export const ExerciseItem = ({ exercise }: Props): JSX.Element => {
     >
       <img
         className="object-contain w-[120px] h-[120px] md:h-[200px] md:w-[200px] mb-1"
-        src={exercise.gifUrl}
+        src="/loading.gif"
         alt="gif-url"
+        onLoad={(e) => (e.currentTarget.src = exercise.gifUrl)}
       />
       <h1 className="text-lg md:text-xl text-center">{exercise.name}</h1>
       <p className="text-gray-500 text-center mt-1">{exercise.target}</p>

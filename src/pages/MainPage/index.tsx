@@ -41,6 +41,18 @@ export const MainPage = (): JSX.Element => {
 
   useUpdateExercisesData();
 
+  const filteredExercises = exercises?.filter(
+    (exercise) =>
+      (searchQuery
+        ? exercise.name
+            .toLocaleLowerCase()
+            .includes(searchQuery.toLocaleLowerCase())
+        : true) &&
+      (bodyPart === "all" || exercise.bodyPart === bodyPart) &&
+      (equipment === "all" || exercise.equipment === equipment) &&
+      (target === "all" || exercise.target === target)
+  );
+
   useEffect(() => {
     if (!searchQuery)
       setSearchParams({
@@ -109,8 +121,8 @@ export const MainPage = (): JSX.Element => {
             )}
           </div>
 
-          <div className="flex flex-col sm:flex-row justify-between items-center sm:items-end lg:items-center lg:mt-4">
-            <div className="flex flex-row sm:flex-col lg:flex-row w-full flex-wrap sm:flex-nowrap sm:w-auto justify-center sm:justify-stretch items-center">
+          <div className="flex flex-row justify-center lg:justify-between lg:mt-4">
+            <div className="flex flex-row lg:flex-row w-full flex-wrap sm:w-auto justify-center items-center">
               {[
                 {
                   label: "Body part",
@@ -170,10 +182,6 @@ export const MainPage = (): JSX.Element => {
                 </div>
               ))}
             </div>
-
-            <div className="flex items-center sm:mt-0 lg:mt-4 mt-4 justify-center p-2 bg-orange-400 cursor-pointer hover:scale-105 text-white rounded-md duration-300 h-[32px] sm:h-[42px] w-[100px] sm:w-[120px]">
-              Search
-            </div>
           </div>
         </menu>
         <motion.div
@@ -189,7 +197,7 @@ export const MainPage = (): JSX.Element => {
           {isLoadingExercises ? (
             <Loader />
           ) : (
-            exercises?.map((exercise, index) => (
+            filteredExercises?.map((exercise, index) => (
               <ExerciseItem
                 exercise={exercise}
                 key={`${index}-${exercise.id}-exercise`}
@@ -197,6 +205,11 @@ export const MainPage = (): JSX.Element => {
             ))
           )}
         </motion.div>
+        {!isLoadingExercises && !filteredExercises?.length && (
+          <p className="text-white text-3xl sm:text-5xl mt-1 sm:mt-12">
+            No exercises found :(
+          </p>
+        )}
       </div>
     </div>
   );
