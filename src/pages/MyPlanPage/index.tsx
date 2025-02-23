@@ -1,6 +1,7 @@
 import { JSX, useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  useDeletePlanMutation,
   useGetExercisesByIdsQuery,
   useGetExercisesQuery,
   useLazyGetUserPlansQuery,
@@ -28,6 +29,8 @@ export const MyPlanPage = (): JSX.Element => {
 
   const { data: exercises, isLoading: isLoadingExercises } =
     useGetExercisesQuery();
+
+  const [deletePlan] = useDeletePlanMutation();
 
   const planToShow = useSelector((state: RootState) => state.plans.planToShow);
 
@@ -90,7 +93,7 @@ export const MyPlanPage = (): JSX.Element => {
         />
       )}
       <Header />
-      <div className="w-full px-16 mt-10 flex flex-col items-center">
+      <div className="w-full px-4 sm:px-16 mt-10 flex flex-col items-center">
         <div
           onClick={() => setShouldShowCreatePlanWindow(true)}
           className="text-white flex justify-center w-[95%] h-[45px] sm:h-[60px] text-lg sm:text-xl items-center cursor-pointer hover:scale-105 duration-300 rounded-md bg-orange-400"
@@ -100,7 +103,7 @@ export const MyPlanPage = (): JSX.Element => {
 
         <div className="flex flex-col mt-4 sm:mt-8 w-full items-center">
           {!isLoadingPlans && !plans?.length && (
-            <h1 className="text-2xl sm:text-4xl mt-1 text-white">
+            <h1 className="text-2xl sm:text-4xl mt-1 text-white text-center">
               You don't have any plans yet
             </h1>
           )}
@@ -114,12 +117,27 @@ export const MyPlanPage = (): JSX.Element => {
               plans?.map((plan, index) => (
                 <div
                   onClick={() => dispatch(setPlanToShow(plan))}
-                  className="w-[75%] min-h-[45px] sm:min-h-[60px] flex justify-center items-center cursor-pointer hover:scale-105 duration-300 rounded-md bg-orange-400 my-3"
+                  className="w-full sm:w-[75%] min-h-[45px] relative sm:min-h-[60px] flex justify-center items-center cursor-pointer hover:scale-105 duration-300 rounded-md bg-orange-400 my-3"
                   key={`plan-${index}-${plan.name}`}
                 >
-                  <p className="w-[400px] text-center whitespace-nowrap inline-block text-ellipsis overflow-hidden text-white text-lg sm:text-xl">
+                  <p className="w-[200px] sm:w-[400px] text-center whitespace-nowrap inline-block text-ellipsis overflow-hidden text-white text-lg sm:text-xl">
                     {plan.name}
                   </p>
+
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+
+                      deletePlan(plan.id);
+                    }}
+                    className="w-[40px] h-[40px] flex justify-center items-center cursor-pointer duration-300 hover:scale-110 absolute right-[4px] sm:right-[16px]"
+                  >
+                    <img
+                      className="object-contain w-[30px] h-[30px]"
+                      src="/delete-icon.png"
+                      alt="delete-icon"
+                    />
+                  </div>
                 </div>
               ))
             )}

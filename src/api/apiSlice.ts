@@ -171,6 +171,20 @@ export const apiSlice = createApi({
         return { data };
       },
     }),
+
+    deletePlan: builder.mutation<void, string>({
+      queryFn: async (planId) => {
+        const { error } = await SUPABASE.from("plans")
+          .delete()
+          .eq("id", planId);
+
+        if (error) throw error;
+
+        return { data: undefined };
+      },
+
+      invalidatesTags: ["Plans"],
+    }),
   }),
 });
 
@@ -187,4 +201,5 @@ export const {
   useCreateOrEditPlanMutation,
   useLazyGetUserPlansQuery,
   useGetExercisesByIdsQuery,
+  useDeletePlanMutation,
 } = apiSlice;
