@@ -79,6 +79,7 @@ export const LoginPage = (): JSX.Element => {
 
           <div>
             <div
+              data-testid="login-btn"
               onClick={() => login({ email, password })}
               className={`${
                 shouldLogin

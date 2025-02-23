@@ -53,6 +53,7 @@ export const StartPage = (): JSX.Element => {
           transition={{ duration: 1, ease: "easeInOut", delay: 2.7 }}
           onClick={() => navigate(routes.login)}
           className="flex items-center rounded-md hover:scale-125 duration-300 text-2xl cursor-pointer justify-center mt-6 mb-8 sm:mt-12 bg-orange-400 w-[130px] h-[45px] sm:mb-16"
+          data-testid="start-btn"
         >
           Start →
         </motion.div>

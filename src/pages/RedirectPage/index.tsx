@@ -16,6 +16,7 @@ export const RedirectPage = (): JSX.Element => {
           get you back to where you need to be!
         </p>
         <div
+          data-testid="redirect-btn"
           className="cursor-pointer bg-red-300 text-white p-4 rounded-md hover:scale-125 duration-300 w-[155px] md:w-[175px] flex justify-center items-center"
           onClick={() => navigate(routes.start)}
         >

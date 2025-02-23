@@ -26,6 +26,7 @@ export const FormField = ({
           className="shadow-md outline outline-black/10 w-full h-[48px] px-4 py-6 rounded-lg"
           value={value}
           onChange={onChange}
+          data-testid={label}
         />
         {type === "password" && (
           <img

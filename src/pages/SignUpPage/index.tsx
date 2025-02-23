@@ -106,17 +106,20 @@ export const SignUpPage = (): JSX.Element => {
               )}
 
             {!!signUpError && (
-              <p className="text-red-400">*{signUpError as string}</p>
+              <p data-testid="custom-alert" className="text-red-400">
+                *{signUpError as string}
+              </p>
             )}
 
             {isSuccessSignUp && (
-              <p className="text-green-400">
+              <p data-testid="custom-alert" className="text-green-400">
                 Check your email to confirm sign up!
               </p>
             )}
           </div>
 
           <div
+            data-testid="sign-up-btn"
             onClick={() => signUp({ email, password })}
             className={`mt-4 w-full ${
               shouldSignUp || !shouldClickSignUpBtn

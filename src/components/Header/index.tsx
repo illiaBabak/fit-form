@@ -83,6 +83,7 @@ export const Header = (): JSX.Element => {
           <SkeletonLoader className="rounded-full w-[30px] h-[30px] sm:w-[50px] sm:h-[50px]" />
         ) : (
           <div
+            data-testid="user-btn"
             ref={userBtnRef}
             className="w-[30px] h-[30px] sm:w-[50px] sm:h-[50px] rounded-full flex items-center justify-center"
             onClick={() => setIsOpenedUserMenu((prev) => !prev)}
@@ -99,6 +100,7 @@ export const Header = (): JSX.Element => {
         >
           <p className="text-gray-500">{currentUser?.email}</p>
           <div
+            data-testid="logout-btn"
             ref={logoutBtnRef}
             onClick={(e) => {
               e.stopPropagation();
