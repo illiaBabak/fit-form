@@ -1,3 +1,5 @@
+import { DAYS } from "src/utils/constants";
+
 export type BodyPart = {
   bodyPart: string;
   id: number;
@@ -23,3 +25,18 @@ export type Exercise = {
   secondaryMuscles: string[];
   target: string;
 };
+
+export type Plan = {
+  id: string;
+  name: string;
+  userId: string;
+  monday: string[];
+  tuesday: string[];
+  wednesday: string[];
+  thursday: string[];
+  friday: string[];
+  saturday: string[];
+  sunday: string[];
+};
+
+export type CurrentPlan = Record<(typeof DAYS)[number], Exercise[]>;

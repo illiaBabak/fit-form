@@ -19,7 +19,7 @@ export const FormField = ({
 
   return (
     <div className="my-4">
-      <p className="mb-4 text-gray-400">{label}</p>
+      <p className="mb-1 text-gray-400">{label}</p>
       <div className="flex flex-row items-center relative">
         <input
           type={shouldShowPassword || type === "text" ? "text" : "password"}

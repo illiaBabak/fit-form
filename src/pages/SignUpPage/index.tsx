@@ -7,10 +7,6 @@ import { Loader } from "src/components/Loader";
 import { FormField } from "src/components/FormField";
 import { isValidEmail } from "src/utils/isValidEmail";
 
-type AuthMessage = {
-  type: "VERIFIED";
-};
-
 export const SignUpPage = (): JSX.Element => {
   const navigate = useNavigate();
 
@@ -43,21 +39,6 @@ export const SignUpPage = (): JSX.Element => {
     }, 5000);
   }, [shouldClickSignUpBtn]);
 
-  useEffect(() => {
-    const channel = new BroadcastChannel("auth");
-
-    const handleMessage = ({ data: { type } }: MessageEvent<AuthMessage>) => {
-      if (type === "VERIFIED") navigate(routes.main);
-    };
-
-    channel.addEventListener("message", handleMessage);
-
-    return () => {
-      channel.removeEventListener("message", handleMessage);
-      channel.close();
-    };
-  }, [navigate]);
-
   return (
     <div className="w-full h-screen relative flex items-center justify-center xl:justify-normal">
       <img
@@ -78,12 +59,12 @@ export const SignUpPage = (): JSX.Element => {
         initial={{ x: -150, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{ duration: 1.5, ease: "easeInOut", delay: 0.2 }}
-        className="absolute w-full h-full sm:rounded-lg sm:w-[600px] sm:h-[80%] flex flex-col items-center bg-white xl:ms-24 shadow-lg py-6 px-10"
+        className="absolute w-full h-full xl:rounded-lg xl:w-[600px] xl:h-[85%] flex flex-col items-center bg-white xl:ms-24 shadow-lg py-6 px-10"
       >
         <h2 className="text-2xl sm:text-4xl font-semibold tracking-wider">
           Sign up
         </h2>
-        <p className="text-gray-400 mt-1 sm:mt-6 text-base text-center sm:text-left">
+        <p className="text-gray-400 mt-1 sm:mt-4 text-base text-center sm:text-left">
           Welcome! Sign up to our service to continue!
         </p>
 
@@ -141,7 +122,7 @@ export const SignUpPage = (): JSX.Element => {
               shouldSignUp || !shouldClickSignUpBtn
                 ? "cursor-pointer hover:scale-105"
                 : "cursor-not-allowed grayscale-25 opacity-75"
-            } shadow-md bg-orange-400 rounded-lg text-white h-[45px] sm:h-[60px] duration-300 flex items-center justify-center text-lg sm:text-xl mb-5 sm:mb-6`}
+            } shadow-md bg-orange-400 rounded-lg text-white h-[40px] sm:h-[55px] duration-300 flex items-center justify-center text-lg sm:text-xl mb-5 sm:mb-6`}
           >
             Sign up
           </div>

@@ -1,27 +1,49 @@
-import { JSX, useEffect, useRef, useState } from "react";
+import { JSX, useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { routes } from "src/config/routes";
-import { useGetCurrentUserQuery, useLogoutMutation } from "src/api/apiSlice";
+import { useLogoutMutation } from "src/api/apiSlice";
 import { SkeletonLoader } from "../SkeletonLoader";
+import { FIREBASE_AUTH, GlobalContext } from "src/root";
 
 export const Header = (): JSX.Element => {
   const navigate = useNavigate();
 
+  const { currentUser, setCurrentUser } = useContext(GlobalContext);
+
   const [isOpenedUserMenu, setIsOpenedUserMenu] = useState(false);
+
+  const [loading, setLoading] = useState(true);
 
   const menuRef = useRef<HTMLDivElement | null>(null);
 
   const userBtnRef = useRef<HTMLDivElement | null>(null);
 
-  const { data, isLoading: isLoadingUser } = useGetCurrentUserQuery();
+  const logoutBtnRef = useRef<HTMLDivElement | null>(null);
 
   const [logout] = useLogoutMutation();
 
   const currentPage = location.pathname;
 
   useEffect(() => {
+    const unsubscribe = FIREBASE_AUTH.onAuthStateChanged((user) => {
+      setCurrentUser(user);
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, [setCurrentUser]);
+
+  useEffect(() => {
+    if (!loading && !currentUser) navigate(routes.start);
+  }, [currentUser, loading, navigate]);
+
+  useEffect(() => {
     const handleClickOutsideMenu = ({ target }: MouseEvent) => {
-      if (target !== menuRef.current && target !== userBtnRef.current)
+      if (
+        target !== menuRef.current &&
+        target !== userBtnRef.current &&
+        target !== logoutBtnRef.current
+      )
         setIsOpenedUserMenu(false);
     };
 
@@ -57,7 +79,7 @@ export const Header = (): JSX.Element => {
       </div>
 
       <div className="bg-white rounded-full cursor-pointer hover:scale-125 duration-300">
-        {isLoadingUser ? (
+        {!currentUser ? (
           <SkeletonLoader className="rounded-full w-[30px] h-[30px] sm:w-[50px] sm:h-[50px]" />
         ) : (
           <div
@@ -65,7 +87,7 @@ export const Header = (): JSX.Element => {
             className="w-[30px] h-[30px] sm:w-[50px] sm:h-[50px] rounded-full flex items-center justify-center"
             onClick={() => setIsOpenedUserMenu((prev) => !prev)}
           >
-            {data?.email?.[0].toLocaleUpperCase()}
+            {currentUser.email?.[0].toLocaleUpperCase()}
           </div>
         )}
       </div>
@@ -75,8 +97,9 @@ export const Header = (): JSX.Element => {
           ref={menuRef}
           className="flex flex-col items-center justify-between p-3 bg-white w-[180px] h-[100px] fixed right-[32px] top-[75px] rounded shadow-md outline-black outline/10"
         >
-          <p className="text-gray-500">{data?.email}</p>
+          <p className="text-gray-500">{currentUser?.email}</p>
           <div
+            ref={logoutBtnRef}
             onClick={(e) => {
               e.stopPropagation();
               logout();

@@ -4,8 +4,7 @@ import { useLazyGetValidExercisesQuery } from "src/api/exercisesDbSlice";
 
 export const useUpdateExercisesData = () => {
   const lastUpdatedTime = localStorage.getItem("lastUpdatedTime") ?? "0";
-
-  const [getValidExercises, { data, isLoading }] =
+  const [getValidExercises, { data, isLoading, isSuccess }] =
     useLazyGetValidExercisesQuery();
 
   const [updateExercises] = useUpdateExercisesMutation();
@@ -13,15 +12,17 @@ export const useUpdateExercisesData = () => {
   useEffect(() => {
     const currentTime = new Date().getTime();
     const lastUpdated = parseInt(lastUpdatedTime, 10);
-    const fiveHoursInMs = 5 * 60 * 60 * 1000;
+    const threeHoursInMs = 3 * 60 * 60 * 1000;
 
-    if (!lastUpdated || currentTime - lastUpdated > fiveHoursInMs) {
+    if (!lastUpdated || currentTime - lastUpdated > threeHoursInMs) {
       getValidExercises();
-
-      if (!!data?.length && !isLoading) {
-        updateExercises(data);
-        localStorage.setItem("lastUpdatedTime", currentTime.toString());
-      }
     }
-  }, [lastUpdatedTime, data, isLoading, getValidExercises, updateExercises]);
+  }, [lastUpdatedTime, getValidExercises]);
+
+  useEffect(() => {
+    if (isSuccess && data?.length && !isLoading) {
+      updateExercises(data);
+      localStorage.setItem("lastUpdatedTime", new Date().getTime().toString());
+    }
+  }, [isSuccess, data, isLoading, updateExercises]);
 };

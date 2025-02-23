@@ -1,4 +1,4 @@
-import { BodyPart, Equipment, Exercise, Muscle } from ".";
+import { BodyPart, Equipment, Exercise, Muscle, Plan } from ".";
 
 export type Json =
   | string
@@ -81,6 +81,36 @@ export type Database = {
           name?: string;
           secondaryMuscles?: string[];
           target?: string;
+        };
+        Relationships: [];
+      };
+      plans: {
+        Row: Plan;
+        Insert: {
+          created_at?: string | null;
+          friday?: string[] | null;
+          id?: string;
+          monday?: string[] | null;
+          name: string;
+          saturday?: string[] | null;
+          sunday?: string[] | null;
+          thursday?: string[] | null;
+          tuesday?: string[] | null;
+          userId?: string | null;
+          wednesday?: string[] | null;
+        };
+        Update: {
+          created_at?: string | null;
+          friday?: string[] | null;
+          id?: string;
+          monday?: string[] | null;
+          name?: string;
+          saturday?: string[] | null;
+          sunday?: string[] | null;
+          thursday?: string[] | null;
+          tuesday?: string[] | null;
+          userId?: string | null;
+          wednesday?: string[] | null;
         };
         Relationships: [];
       };

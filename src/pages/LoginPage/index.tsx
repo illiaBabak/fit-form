@@ -19,13 +19,14 @@ export const LoginPage = (): JSX.Element => {
   const [login, { isSuccess, isLoading, error: errorLogin }] =
     useLoginMutation();
 
-  const [signInWithGoogle] = useSignInWithGoogleMutation();
+  const [signInWithGoogle, { isSuccess: isSuccessGoogleAuth }] =
+    useSignInWithGoogleMutation();
 
   const shouldLogin = isValidEmail(email) && password.length;
 
   useEffect(() => {
-    if (isSuccess) navigate(routes.main);
-  }, [isSuccess]);
+    if (isSuccess || isSuccessGoogleAuth) navigate(routes.main);
+  }, [isSuccess, navigate, isSuccessGoogleAuth]);
 
   return (
     <div className="w-full h-screen relative flex items-center xl:justify-stretch justify-center">
@@ -46,12 +47,12 @@ export const LoginPage = (): JSX.Element => {
         initial={{ x: -150, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{ duration: 1.5, ease: "easeInOut", delay: 0.2 }}
-        className="absolute w-full sm:w-[500px] md:w-[600px] h-full sm:h-[80%] flex flex-col items-center justify-between bg-white rounded-0 sm:rounded-lg xl:ms-24 shadow-lg py-6 px-10"
+        className="absolute w-full h-screen xl:w-[600px] xl:h-[85%] flex flex-col items-center justify-between bg-white rounded-0 xl:rounded-lg xl:ms-24 shadow-lg py-6 px-10"
       >
         <h2 className="text-3xl sm:text-4xl font-semibold tracking-wider">
           Login
         </h2>
-        <p className="text-gray-400 mt-6 sm:text-base sm:text-left text-center text-sm">
+        <p className="text-gray-400 mt-4 sm:text-base sm:text-left text-center text-sm">
           Welcome back! Please login to your account.
         </p>
 
@@ -83,18 +84,18 @@ export const LoginPage = (): JSX.Element => {
                 shouldLogin
                   ? "cursor-pointer hover:scale-105"
                   : "grayscale-25 opacity-75 cursor-not-allowed"
-              } mt-1 sm:mt-4 w-full shadow-md bg-orange-400 rounded-lg text-white h-[45px] sm:h-[60px] duration-300 flex items-center justify-center text-lg sm:text-xl`}
+              } mt-1 sm:mt-4 w-full shadow-md bg-orange-400 rounded-lg text-white h-[40px] sm:h-[55px] duration-300 flex items-center justify-center text-lg sm:text-xl`}
             >
               Login
             </div>
 
             <div
               onClick={signInWithGoogle}
-              className="mt-4 w-full text-black cursor-pointer hover:scale-105 rounded-lg h-[45px] sm:h-[60px] duration-300 flex items-center justify-center text-sm sm:text-xl shadow-xl outline-black outline/10"
+              className="mt-4 w-full text-black cursor-pointer hover:scale-105 rounded-lg h-[40px] sm:h-[55px] duration-300 flex items-center justify-center text-sm sm:text-xl shadow-xl outline-black outline/10"
             >
               <img
                 src="/google-logo.webp"
-                className="object-contain h-[30px] w-[30px] sm:h-[40px] sm:w-[40px]"
+                className="object-contain h-[25px] w-[25px] sm:h-[35px] sm:w-[35px]"
                 alt="google-logo"
               />
               <p className="sm:text-xl text-sm ms-2">Continue with Google</p>

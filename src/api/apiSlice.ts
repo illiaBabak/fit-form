@@ -1,73 +1,80 @@
 import { createApi, fakeBaseQuery } from "@reduxjs/toolkit/query/react";
-import { User } from "@supabase/supabase-js";
-import { routes } from "src/config/routes";
-import { SUPABASE } from "src/root";
-import { BodyPart, Equipment, Muscle, Exercise } from "src/types";
-import { isExerciseArr } from "src/utils/guards";
+import { SUPABASE, FIREBASE_AUTH } from "src/root";
+import { BodyPart, Equipment, Muscle, Exercise, Plan } from "src/types";
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+  signInWithEmailAndPassword,
+  signOut,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from "firebase/auth";
 
 export const apiSlice = createApi({
-  reducerPath: "supabaseApi",
+  reducerPath: "customApi",
   baseQuery: fakeBaseQuery(),
+  tagTypes: ["Exercises", "Plans"],
   endpoints: (builder) => ({
-    getCurrentUser: builder.query<User | null, void>({
-      queryFn: async () => {
-        const {
-          data: { user },
-          error,
-        } = await SUPABASE.auth.getUser();
-
-        if (error) throw { error };
-
-        return { data: user };
-      },
-    }),
-
-    login: builder.mutation<User, { email: string; password: string }>({
+    login: builder.mutation<
+      { uid: string; email: string | null },
+      { email: string; password: string }
+    >({
       queryFn: async ({ email, password }) => {
-        const { data, error } = await SUPABASE.auth.signInWithPassword({
-          email,
-          password,
-        });
+        try {
+          const userCredential = await signInWithEmailAndPassword(
+            FIREBASE_AUTH,
+            email,
+            password
+          );
+          const user = userCredential.user;
 
-        if (error) return { error: error.message };
-
-        return { data: data.user };
+          return { data: { uid: user.uid, email: user.email } };
+        } catch {
+          return { error: "Invalid email/password" };
+        }
       },
     }),
 
     signInWithGoogle: builder.mutation({
       queryFn: async () => {
-        const { data, error } = await SUPABASE.auth.signInWithOAuth({
-          provider: "google",
-          options: {
-            redirectTo: `http://localhost:3000${routes.main}`,
-          },
-        });
+        try {
+          const provider = new GoogleAuthProvider();
 
-        if (error) return { error: error.message };
+          await signInWithPopup(FIREBASE_AUTH, provider);
 
-        return { data: data.url };
+          return { data: "Redirecting to Google" };
+        } catch (error) {
+          return { error };
+        }
       },
     }),
 
-    signUp: builder.mutation<User | null, { email: string; password: string }>({
+    signUp: builder.mutation<
+      { uid: string; email: string | null },
+      { email: string; password: string }
+    >({
       queryFn: async ({ email, password }) => {
-        const { data, error } = await SUPABASE.auth.signUp({
-          email,
-          password,
-        });
+        try {
+          const userCredential = await createUserWithEmailAndPassword(
+            FIREBASE_AUTH,
+            email,
+            password
+          );
 
-        if (error) return { error: error.message };
+          const createdUser = userCredential.user;
 
-        return { data: data.user };
+          await sendEmailVerification(createdUser);
+
+          return { data: { uid: createdUser.uid, email: createdUser.email } };
+        } catch {
+          return { error: "User already exists" };
+        }
       },
     }),
 
     logout: builder.mutation<void, void>({
       queryFn: async () => {
-        const { error } = await SUPABASE.auth.signOut();
-
-        if (error) throw { error };
+        await signOut(FIREBASE_AUTH);
 
         return { data: undefined };
       },
@@ -111,6 +118,8 @@ export const apiSlice = createApi({
 
         return { data };
       },
+
+      providesTags: ["Exercises"],
     }),
 
     updateExercises: builder.mutation<void, Exercise[]>({
@@ -121,12 +130,51 @@ export const apiSlice = createApi({
 
         return { data: undefined };
       },
+
+      invalidatesTags: ["Exercises"],
+    }),
+
+    getUserPlans: builder.query<Plan[], string>({
+      queryFn: async (userId) => {
+        const { data, error } = await SUPABASE.from("plans")
+          .select()
+          .eq("userId", userId)
+          .order("created_at", { ascending: false });
+
+        if (error) throw { error };
+
+        return { data };
+      },
+
+      providesTags: ["Plans"],
+    }),
+
+    createOrEditPlan: builder.mutation<void, Plan>({
+      queryFn: async (plan) => {
+        const { error } = await SUPABASE.from("plans").upsert(plan);
+
+        if (error) throw { error };
+
+        return { data: undefined };
+      },
+      invalidatesTags: ["Plans"],
+    }),
+
+    getExercisesByIds: builder.query<Exercise[], string[]>({
+      queryFn: async (ids) => {
+        const { data, error } = await SUPABASE.from("exercises")
+          .select()
+          .in("id", ids);
+
+        if (error) throw { error };
+
+        return { data };
+      },
     }),
   }),
 });
 
 export const {
-  useGetCurrentUserQuery,
   useLoginMutation,
   useSignInWithGoogleMutation,
   useSignUpMutation,
@@ -136,4 +184,7 @@ export const {
   useGetMusclesQuery,
   useGetExercisesQuery,
   useUpdateExercisesMutation,
+  useCreateOrEditPlanMutation,
+  useLazyGetUserPlansQuery,
+  useGetExercisesByIdsQuery,
 } = apiSlice;

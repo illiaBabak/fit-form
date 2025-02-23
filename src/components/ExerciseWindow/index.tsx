@@ -2,7 +2,7 @@ import { JSX } from "react";
 import { Exercise } from "src/types";
 import { WindowWrapper } from "../WindowWrapper";
 import { useDispatch } from "react-redux";
-import { setExerciseToShowId } from "src/features/exercises/exercisesSlice";
+import { setExerciseToShow } from "src/features/exercises/exercisesSlice";
 import { capitalize } from "src/utils/capitalize";
 
 type Props = {
@@ -12,7 +12,7 @@ type Props = {
 export const ExerciseWindow = ({ exercise }: Props): JSX.Element => {
   const dispatch = useDispatch();
 
-  const closeWindow = () => dispatch(setExerciseToShowId(null));
+  const closeWindow = () => dispatch(setExerciseToShow(null));
 
   return (
     <WindowWrapper onClose={closeWindow}>

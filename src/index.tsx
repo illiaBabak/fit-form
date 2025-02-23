@@ -9,11 +9,9 @@ const root = document.getElementById("root");
 
 if (root) {
   createRoot(root).render(
-    <StrictMode>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </StrictMode>
+    <Provider store={store}>
+      <App />
+    </Provider>
   );
 } else {
   throw new Error("Something went wrong with root element!");

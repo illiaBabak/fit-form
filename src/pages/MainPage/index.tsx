@@ -1,6 +1,6 @@
 import { JSX, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import { ExerciseItem } from "src/components/Exercise";
+import { ExerciseItem } from "src/components/ExerciseItem";
 import { Header } from "src/components/Header";
 import { Loader } from "src/components/Loader";
 import { SkeletonLoader } from "src/components/SkeletonLoader";
@@ -10,13 +10,16 @@ import {
   useGetExercisesQuery,
   useGetMusclesQuery,
 } from "src/api/apiSlice";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "src/app/store";
 import { ExerciseWindow } from "src/components/ExerciseWindow";
 import { motion } from "motion/react";
 import { useUpdateExercisesData } from "src/hooks/useUpdateExercisesData";
+import { setExerciseToShow } from "src/features/exercises/exercisesSlice";
 
 export const MainPage = (): JSX.Element => {
+  const dispatch = useDispatch();
+
   const [searchParams, setSearchParams] = useSearchParams();
 
   const searchQuery = searchParams.get("query") ?? "";
@@ -60,7 +63,7 @@ export const MainPage = (): JSX.Element => {
         equipment: equipment,
         target: target,
       });
-  }, [searchQuery, setSearchParams]);
+  }, [searchQuery, setSearchParams, bodyPart, equipment, target]);
 
   useEffect(() => {
     setSearchParams({
@@ -69,7 +72,7 @@ export const MainPage = (): JSX.Element => {
       equipment: equipment || "all",
       target: target || "all",
     });
-  }, []);
+  }, [bodyPart, equipment, setSearchParams, searchQuery, target]);
 
   const handleSearchChange = (key: string, value: string) =>
     setSearchParams((prevParams) => ({
@@ -98,7 +101,7 @@ export const MainPage = (): JSX.Element => {
               value={searchQuery}
               placeholder="Search..."
             />
-            {!!searchQuery.length ? (
+            {searchQuery.length ? (
               <div
                 onClick={() =>
                   setSearchParams({
@@ -190,7 +193,6 @@ export const MainPage = (): JSX.Element => {
           transition={{
             duration: 2.5,
             ease: "easeInOut",
-            delay: 0.2,
           }}
           className="flex flex-row flex-wrap w-full px-6 mt-4 justify-center sm:justify-between"
         >
@@ -199,6 +201,7 @@ export const MainPage = (): JSX.Element => {
           ) : (
             filteredExercises?.map((exercise, index) => (
               <ExerciseItem
+                handleClick={() => dispatch(setExerciseToShow(exercise))}
                 exercise={exercise}
                 key={`${index}-${exercise.id}-exercise`}
               />

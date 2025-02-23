@@ -26,7 +26,7 @@ export const StartPage = (): JSX.Element => {
           initial={{ y: 150, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 1.5, ease: "easeInOut", delay: 0.2 }}
-          className="text-white text-3xl sm:text-5xl lg:text-7xl w-full lg:w-[50%] tracking-wider font-semibold sm:text-left text-center"
+          className="text-white text-3xl sm:text-5xl lg:text-7xl w-full lg:w-[75%] tracking-wider font-semibold sm:text-left text-center"
         >
           START YOUR PROGRAM TODAY
         </motion.h2>
