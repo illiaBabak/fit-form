@@ -13,7 +13,7 @@ describe("Navigation", () => {
     cy.get('[data-testid="Password"]').type("password123");
     cy.get('[data-testid="Confirm password"]').type("password123");
     cy.get('[data-testid="sign-up-btn"]').click();
-    cy.get('[data-testid="custom-alert"]');
+    cy.get('[data-testid="custom-alert"]').should("exist");
     cy.get('[data-testid="custom-alert"]').should("be.visible");
     cy.get('[data-testid="custom-alert"]')
       .should("not.have.text", "Check your email to confirm sign up!")

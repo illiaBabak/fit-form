@@ -1,7 +1,7 @@
 import { JSX } from "react";
 
 export const Loader = (): JSX.Element => (
-  <div className="absolute bottom-2 right-2">
+  <div className="absolute bottom-2 right-2" data-testid="loader">
     <svg
       className="w-16 h-16 text-gray-200 animate-spin dark:text-gray-600 fill-orange-600"
       viewBox="0 0 100 101"

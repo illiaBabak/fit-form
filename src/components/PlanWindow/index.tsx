@@ -112,6 +112,7 @@ export const PlanWindow = ({
     return (
       <WindowWrapper onClose={() => setSelectedDay(null)}>
         <div
+          data-testid="exercises-window"
           onClick={(e) => e.stopPropagation()}
           className="flex cursor-default flex-col px-8 py-4 shadow-md rounded-md relative outline-black outline/10 bg-white w-[95%] h-[95%]"
         >
@@ -154,6 +155,7 @@ export const PlanWindow = ({
   return (
     <WindowWrapper onClose={closeWindow}>
       <div
+        data-testid="plan-window"
         onClick={(e) => e.stopPropagation()}
         className="flex cursor-default flex-col px-8 py-4 shadow-md rounded-md relative outline-black outline/10 bg-white w-[95%] h-[95%]"
       >
@@ -172,6 +174,7 @@ export const PlanWindow = ({
           <div className="flex flex-row items-center w-full justify-center mt-5">
             <p className="text-xl">Name</p>
             <input
+              data-testid="plan-name"
               value={planName}
               onChange={({ currentTarget: { value } }) => setPlanName(value)}
               type="text"
@@ -182,6 +185,7 @@ export const PlanWindow = ({
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-7 w-full gap-3 mt-6 h-full overflow-y-auto lg:overflow-y-hidden">
             {DAYS.map((day, index) => (
               <div
+                data-testid={`${day}-section`}
                 onDrop={() => onDrop(day)}
                 onDragOver={(e) => e.preventDefault()}
                 className={`border-orange-400 rounded-md border-solid border-3 w-full h-full ${
@@ -194,6 +198,7 @@ export const PlanWindow = ({
                 </h2>
                 <div className="flex flex-col items-center overflow-y-auto h-[480px]">
                   <img
+                    data-testid="add-exercise-btn"
                     onClick={() => setSelectedDay(day)}
                     src="/plus.png"
                     alt="plus-icon"
@@ -201,6 +206,7 @@ export const PlanWindow = ({
                   />
                   {currentPlan[day].map((exercise, index) => (
                     <div
+                      data-testid="plan-exercise"
                       draggable
                       onDragStart={() => onDragStart(exercise, day)}
                       className="flex flex-col justify-center items-center w-[90px] h-[90px] rounded-md p-2 shadow-md outline-black outline/10 cursor-pointer duration-300 hover:scale-115 mt-2"
@@ -223,6 +229,7 @@ export const PlanWindow = ({
           </div>
 
           <div
+            data-testid="save-plan-btn"
             onClick={handleCreatePlan}
             className={`${
               !planName.length

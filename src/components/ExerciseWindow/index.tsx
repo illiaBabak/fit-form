@@ -17,10 +17,12 @@ export const ExerciseWindow = ({ exercise }: Props): JSX.Element => {
   return (
     <WindowWrapper onClose={closeWindow}>
       <div
+        data-testid="exercise-window"
         onClick={(e) => e.stopPropagation()}
         className="flex cursor-default relative flex-col md:flex-row items-center md:items-start w-[80%] h-[90%] rounded-md bg-white shadow-md outline-black outline/10 md:py-8 p-1 md:px-6"
       >
         <div
+          data-testid="window-close-btn"
           onClick={closeWindow}
           className="w-[32px] h-[32px] text-2xl font-semibold cursor-pointer duration-300 hover:scale-115 flex justify-center items-center absolute right-2 top-2"
         >
@@ -32,7 +34,10 @@ export const ExerciseWindow = ({ exercise }: Props): JSX.Element => {
           alt="exercise-gif"
         />
         <div className="flex flex-col items-center md:items-start md:ms-3 tracking-wide">
-          <h1 className="text-xl text-center lg:text-left lg:text-4xl">
+          <h1
+            data-testid="exercise-window-title"
+            className="text-xl text-center lg:text-left lg:text-4xl"
+          >
             {capitalize(exercise.name)}
           </h1>
           <p className="mt-2 lg:mt-4 lg:text-base text-sm">

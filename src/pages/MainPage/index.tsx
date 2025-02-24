@@ -88,6 +88,7 @@ export const MainPage = (): JSX.Element => {
         <menu className="bg-gray-200 flex-col flex w-[95%] mt-4 mx-4 sm:mt-8 sm:mx-8 p-4 sm:p-6 rounded-md">
           <div className="w-full relative">
             <input
+              data-testid="search"
               className="shadow-md ps-3 bg-white outline-black outline/55 w-full pe-[28px] sm:pe-[42px] h-[32px] sm:h-[42px] py-2 px-3 cursor-pointer rounded-md"
               type="text"
               onChange={({ currentTarget: { value } }) =>
@@ -166,6 +167,7 @@ export const MainPage = (): JSX.Element => {
                     <SkeletonLoader className="w-[80px] sm:w-[140px] h-[32px] rounded-md ms-1" />
                   ) : (
                     <select
+                      data-testid={key}
                       onChange={({ currentTarget: { value } }) =>
                         handleSearchChange(key, value)
                       }
@@ -195,6 +197,7 @@ export const MainPage = (): JSX.Element => {
             ease: "easeInOut",
           }}
           className="flex flex-row flex-wrap w-full px-6 mt-4 justify-center sm:justify-between"
+          data-testid="exercise-list"
         >
           {isLoadingExercises ? (
             <Loader />

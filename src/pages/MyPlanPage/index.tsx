@@ -95,6 +95,7 @@ export const MyPlanPage = (): JSX.Element => {
       <Header />
       <div className="w-full px-4 sm:px-16 mt-10 flex flex-col items-center">
         <div
+          data-testid="create-plan-btn"
           onClick={() => setShouldShowCreatePlanWindow(true)}
           className="text-white flex justify-center w-[95%] h-[45px] sm:h-[60px] text-lg sm:text-xl items-center cursor-pointer hover:scale-105 duration-300 rounded-md bg-orange-400"
         >
@@ -116,6 +117,7 @@ export const MyPlanPage = (): JSX.Element => {
             ) : (
               plans?.map((plan, index) => (
                 <div
+                  data-testid="plan"
                   onClick={() => dispatch(setPlanToShow(plan))}
                   className="w-full sm:w-[75%] min-h-[45px] relative sm:min-h-[60px] flex justify-center items-center cursor-pointer hover:scale-105 duration-300 rounded-md bg-orange-400 my-3"
                   key={`plan-${index}-${plan.name}`}
@@ -125,6 +127,7 @@ export const MyPlanPage = (): JSX.Element => {
                   </p>
 
                   <div
+                    data-testid="delete-plan-btn"
                     onClick={(e) => {
                       e.stopPropagation();
 

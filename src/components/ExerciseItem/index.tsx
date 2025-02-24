@@ -8,6 +8,7 @@ type Props = {
 
 export const ExerciseItem = ({ exercise, handleClick }: Props): JSX.Element => (
   <div
+    data-testid="exercise"
     onClick={handleClick}
     className="bg-white flex flex-col items-center justify-center outline-black outline/10 shadow-md w-[220px] h-[220px] md:w-[300px] md:h-[300px] rounded-lg cursor-pointer duration-300 hover:scale-105 p-3 m-3"
   >
