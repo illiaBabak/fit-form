@@ -7,7 +7,7 @@ export const StartPage = (): JSX.Element => {
   const navigate = useNavigate();
 
   return (
-    <div className="w-full h-screen flex items-center relative">
+    <div className="w-full h-screen flex items-center relative bg-zinc-800">
       <img
         className="w-full h-screen object-cover brightness-45"
         src="/start-page.jpg"

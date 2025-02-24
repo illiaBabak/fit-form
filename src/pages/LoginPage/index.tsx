@@ -29,7 +29,7 @@ export const LoginPage = (): JSX.Element => {
   }, [isSuccess, navigate, isSuccessGoogleAuth]);
 
   return (
-    <div className="w-full h-screen relative flex items-center xl:justify-stretch justify-center">
+    <div className="w-full h-screen relative flex items-center xl:justify-stretch justify-center bg-zinc-800">
       <img
         className="w-full h-screen object-cover brightness-60"
         src="/regestration.jpg"
