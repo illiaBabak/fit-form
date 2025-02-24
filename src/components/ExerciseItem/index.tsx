@@ -17,6 +17,7 @@ export const ExerciseItem = ({ exercise, handleClick }: Props): JSX.Element => (
       src="/loading.gif"
       alt="gif-url"
       onLoad={(e) => (e.currentTarget.src = exercise.gifUrl)}
+      onError={(e) => (e.currentTarget.src = "/loading.gif")}
     />
     <h1 className="text-lg md:text-xl text-center">{exercise.name}</h1>
     <p className="text-gray-500 text-center mt-1">{exercise.target}</p>
