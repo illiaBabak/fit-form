@@ -1,50 +1,50 @@
-# React + TypeScript + Vite
+<div align="center">
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Technological stack
 
-Currently, two official plugins are available:
+This project was written in React using Typescript, Vite, Tailwind v4, Redux (RTK), Firebase, Supabase and Cypress
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+<img src="https://cdn.freebiesupply.com/logos/large/2x/react-1-logo-png-transparent.png" alt="React" width="75" height="75" style="object-fit: cover;">
+<img src="https://static-00.iconduck.com/assets.00/typescript-icon-icon-1024x1024-vh3pfez8.png" alt="TypeScript" width="75" height="75" style="object-fit: cover;">
+<img src="https://cdn-icons-png.flaticon.com/512/5968/5968358.png" alt="SCSS" width="75" height="75" style="object-fit: cover;">
+<img src="https://gyazo.com/d779a2f7951457023e090625aa510cc3/max_size/1000" alt="Tailwind" width="75" height="75" style="object-fit: cover;">
+<img src="https://upload.wikimedia.org/wikipedia/commons/f/f1/Vitejs-logo.svg" alt="Vite" width="75" height="75" style="object-fit: cover">
+<img src="https://cdn-images-1.medium.com/max/1600/1*Vo5RDpNkOsfDn8sx06mthA.png" alt="Redux" width="75" height="75" style="object-fit: cover;">
+<img src="https://cdn.prod.website-files.com/655b60964be1a1b36c746790/655b60964be1a1b36c746d41_646dfce3b9c4849f6e401bff_supabase-logo-icon_1.png" alt="Supabase" width="75" height="75" style="object-fit: cover;">
+<img src="https://firebase.google.com/static/images/brand-guidelines/logo-logomark.png" alt="Firebase" width="75" height="75" style="object-fit: cover;">
+<img src="https://static-00.iconduck.com/assets.00/cypress-icon-2048x2048-swmlmjca.png" alt="Cypress" width="75" height="75" style="object-fit: cover;">
 
-## Expanding the ESLint configuration
+# Fit form
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Fit Form is a modern web application for exploring exercises and creating personalized workout plans. Plan your training easily and efficiently right in your browser! 💪🌐
+This web application is written to learn how to work with Redux Toolkit, Firebase and Cypress
 
-- Configure the top-level `parserOptions` property like this:
+![Start](https://docs.google.com/uc?id=1mOZ3uUToRyasZuBAghohj9IYXYb2qgAW)
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+<i>Start</i>
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+![Login](https://docs.google.com/uc?id=19_Id59fp3QxaTx3lj75wma50a6TRC-ML)
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+<i>Login</i>
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+![Main](https://docs.google.com/uc?id=1WhCovUir8uKTfEpv8ZFXPctC7i98P5VJ)
+
+<i>Main</i>
+
+![Plans](https://docs.google.com/uc?id=1-mYVZ_rffeRe4M0sHlkPxJXLmLgJX_L1)
+
+<i>Plans</i>
+
+# pnpm scripts
+
+- `i` - to install all packages
+- `dev` - start dev server and open browser
+- `build` - build for production
+- `preview` - locally preview production build
+- `test` - launch test runner
+
+# Link to try a project
+
+https://fit-form-gamma.vercel.app
+
+</div>
